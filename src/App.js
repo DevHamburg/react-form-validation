@@ -1,11 +1,34 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './App.css'
 
+const formInputs = {
+  name: '',
+  email: '',
+  textarea: '',
+  checkbox: false,
+}
+
 export default function App() {
+  const [formData, setFormData] = useState(formInputs)
+
+  function handleSubmit(e) {
+    e.preventDefault()
+  }
+
+  function handleInputChange(e) {
+    setFormData({
+      ...formData,
+      [e.target.value]: e.target.name,
+    })
+    console.log('value ' + e.target.value)
+    console.log('name ' + e.target.name)
+  }
+
+  const { name, email, textarea, checkbox } = formData
   return (
     <div className="container">
       <h1>Hier stand ein Text...</h1>
-      <form action="">
+      <form onSubmit={handleSubmit}>
         <label htmlFor="name">
           <p>Name</p>
         </label>
@@ -14,6 +37,7 @@ export default function App() {
           id="name"
           name="name"
           placeholder="type name here..."
+          onChange={handleInputChange}
         />
         <label htmlFor="email">
           <p>E-Mail </p>
@@ -21,8 +45,9 @@ export default function App() {
         <input
           type="text"
           id="email"
-          email="email"
+          name="email"
           placeholder="type email here..."
+          onChange={handleInputChange}
         />
         <label htmlFor="textarea">
           <p>Message </p>
@@ -33,13 +58,19 @@ export default function App() {
           cols="10"
           rows="3"
           placeholder="type text here..."
+          onChange={handleInputChange}
         />
         <div />
         <div className="grid">
           <a href="www.google.de">
             <p>AGBs </p>
           </a>
-          <input type="checkbox" id="checkbox" name="checkbox" />
+          <input
+            type="checkbox"
+            id="checkbox"
+            name="checkbox"
+            onChange={handleInputChange}
+          />
           <label htmlFor="checkbox">
             <p> gelesen</p>
           </label>
